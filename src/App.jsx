@@ -13,41 +13,49 @@ function App() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  const [onlyDiscount, setOnlyDiscount] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [onlyDiscount, setOnlyDiscount] = useState(false);
-
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((response) => response.json())
+    fetch("https://dummyjson.com/products?limit=194")
+      .then((res) => res.json())
       .then((data) => {
         setProducts(data.products);
         setFilteredProducts(data.products);
-
-        const uniqueCategories = [
-          ...new Set(data.products.map(p => p.category))
-        ];
-        setCategories(uniqueCategories);
-
         setLoading(false);
       })
       .catch(() => {
-        setError("Error al cargar los productos");
+        setError("Error al cargar productos");
         setLoading(false);
       });
   }, []);
 
   useEffect(() => {
+    fetch("https://dummyjson.com/products/categories")
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch(() => {
+        console.log("Error al cargar categorías");
+      });
+  }, []);
+
+  useEffect(() => {
     let result = [...products];
+
     if (selectedCategory !== "all") {
-      result = result.filter(p => p.category === selectedCategory);
+      result = result.filter((p) => p.category === selectedCategory);
     }
+
     if (onlyDiscount) {
-    result = result.filter(p => p.discountPercentage > 10); /*En este caso todos los productos tienen porcentaje de descuento, pero filtré sólo los que tienen un porcentaje mayor al 10% para que se vea que el checkbox funciona*/
+      result = result.filter((p) => p.discountPercentage > 10);
     }
+
     setFilteredProducts(result);
-  }, [selectedCategory, products, onlyDiscount]);
+  }, [products, selectedCategory, onlyDiscount]);
 
   if (loading) return <p>Cargando productos...</p>;
   if (error) return <p>{error}</p>;
@@ -58,6 +66,7 @@ function App() {
 
       <div className="controls">
         <SearchBar />
+
         <CategoryFilter
           categories={categories}
           selectedCategory={selectedCategory}
@@ -68,9 +77,13 @@ function App() {
       </div>
 
       <div className="products-grid">
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {filteredProducts.length === 0 ? (
+          <p>No hay productos</p>
+        ) : (
+          filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))
+        )}
       </div>
     </div>
   );
