@@ -1,13 +1,19 @@
 import React from "react";
 
-function CategoryFilter() {
+function CategoryFilter({ categories, selectedCategory, setSelectedCategory }) {
   return (
     <div className="category-filter">
-      <select>
-        <option>Todas las categorías</option>
-        <option>smartphones</option>
-        <option>laptops</option>
-        <option>fragrances</option>
+      <select
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+      >
+        <option value="all">Todas las categorías</option>
+
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
       </select>
 
       <label className="discount-filter">
@@ -17,5 +23,6 @@ function CategoryFilter() {
     </div>
   );
 }
+
 
 export default CategoryFilter;
