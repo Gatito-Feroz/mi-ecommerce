@@ -16,6 +16,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [onlyDiscount, setOnlyDiscount] = useState(false);
+
   useEffect(() => {
     fetch("https://dummyjson.com/products")
       .then((response) => response.json())
@@ -41,8 +43,11 @@ function App() {
     if (selectedCategory !== "all") {
       result = result.filter(p => p.category === selectedCategory);
     }
+    if (onlyDiscount) {
+    result = result.filter(p => p.discountPercentage > 10); /*En este caso todos los productos tienen porcentaje de descuento, pero filtré sólo los que tienen un porcentaje mayor al 10% para que se vea que el checkbox funciona*/
+    }
     setFilteredProducts(result);
-  }, [selectedCategory, products]);
+  }, [selectedCategory, products, onlyDiscount]);
 
   if (loading) return <p>Cargando productos...</p>;
   if (error) return <p>{error}</p>;
@@ -57,6 +62,8 @@ function App() {
           categories={categories}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
+          onlyDiscount={onlyDiscount}
+          setOnlyDiscount={setOnlyDiscount}
         />
       </div>
 

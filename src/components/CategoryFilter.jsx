@@ -1,6 +1,6 @@
 import React from "react";
 
-function CategoryFilter({ categories, selectedCategory, setSelectedCategory }) {
+function CategoryFilter({ categories, selectedCategory, setSelectedCategory, onlyDiscount, setOnlyDiscount }) {
   return (
     <div className="category-filter">
       <select
@@ -17,7 +17,11 @@ function CategoryFilter({ categories, selectedCategory, setSelectedCategory }) {
       </select>
 
       <label className="discount-filter">
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          checked={onlyDiscount}
+          onChange={(e) => setOnlyDiscount(e.target.checked)}
+        />
         Solo con descuento
       </label>
     </div>
