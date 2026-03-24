@@ -18,6 +18,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     fetch("https://dummyjson.com/products?limit=194")
       .then((res) => res.json())
@@ -53,9 +55,14 @@ function App() {
     if (onlyDiscount) {
       result = result.filter((p) => p.discountPercentage > 10);
     }
+    if (search !== "") {
+    result = result.filter((p) =>
+      p.title.toLowerCase().includes(search.toLowerCase())
+    );
+  }
 
     setFilteredProducts(result);
-  }, [products, selectedCategory, onlyDiscount]);
+  }, [products, selectedCategory, onlyDiscount, search]);
 
   if (loading) return <p>Cargando productos...</p>;
   if (error) return <p>{error}</p>;
@@ -65,7 +72,7 @@ function App() {
       <Header />
 
       <div className="controls">
-        <SearchBar />
+       <SearchBar search={search} setSearch={setSearch} />
 
         <CategoryFilter
           categories={categories}
