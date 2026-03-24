@@ -1,11 +1,11 @@
 import React from "react";
 import "../styles/card.css";
 
-function ProductCard({ product }) {
+function ProductCard({ product,onSelect }) {
   const discountedPrice = product.price - (product.price * product.discountPercentage) / 100;
 
   return (
-    <div className="card">
+    <div className="card"  onClick={() => onSelect(product)}>
       <figure>
         <img src={product.thumbnail} alt={product.title} />
       </figure>

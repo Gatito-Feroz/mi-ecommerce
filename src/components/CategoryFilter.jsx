@@ -9,10 +9,7 @@ function CategoryFilter({
 }) {
   return (
     <div className="category-filter">
-      <select
-        value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-      >
+      <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
         <option value="all">Todas las categorías</option>
 
         {categories.map((cat) => (
@@ -23,11 +20,7 @@ function CategoryFilter({
       </select>
 
       <label className="discount-filter">
-        <input
-          type="checkbox"
-          checked={onlyDiscount}
-          onChange={(e) => setOnlyDiscount(e.target.checked)}
-        />
+        <input type="checkbox" checked={onlyDiscount} onChange={(e) => setOnlyDiscount(e.target.checked)}/>
         Solo con descuento
       </label>
     </div>

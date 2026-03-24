@@ -6,6 +6,7 @@ import CategoryFilter from "./components/CategoryFilter";
 import SearchBar from "./components/SearchBar";
 import ProductCard from "./components/ProductCard";
 import Sort from "./components/Sort"
+import ProductDetail from "./components/ProductDetail";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -22,6 +23,8 @@ function App() {
   const [search, setSearch] = useState("");
 
   const [sortOption, setSortOption] = useState("default");
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     fetch("https://dummyjson.com/products?limit=194")
@@ -59,18 +62,16 @@ function App() {
       result = result.filter((p) => p.discountPercentage > 10);
     }
     if (search !== "") {
-    result = result.filter((p) =>
-      p.title.toLowerCase().includes(search.toLowerCase())
-    );
-   
-  }
+        result = result.filter((p) =>
+            p.title.toLowerCase().includes(search.toLowerCase()));
+    }
    if (sortOption === "rating-desc") {
-  result.sort((a, b) => b.rating - a.rating);
-}
+        result.sort((a, b) => b.rating - a.rating);
+    }
 
-if (sortOption === "rating-asc") {
-  result.sort((a, b) => a.rating - b.rating);
-}
+    if (sortOption === "rating-asc") {
+        result.sort((a, b) => a.rating - b.rating);
+    }
 
     setFilteredProducts(result);
   }, [products, search, selectedCategory, onlyDiscount, sortOption]);
@@ -94,15 +95,23 @@ if (sortOption === "rating-asc") {
         />
          <Sort sortOption={sortOption} setSortOption={setSortOption} />
       </div>
-      
-
+        {selectedProduct && (
+            <ProductDetail
+                product={selectedProduct}
+                onClose={() => setSelectedProduct(null)}
+            />
+        )}
       <div className="products-grid">
         {filteredProducts.length === 0 ? (
           <p>No hay productos</p>
             ) : (
           filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-           ))
+            <ProductCard
+                key={product.id}
+                product={product}
+                onSelect={setSelectedProduct}
+            />
+          ))
         )}
       </div>
     </div>
