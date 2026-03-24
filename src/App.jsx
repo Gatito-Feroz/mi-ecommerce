@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import CategoryFilter from "./components/CategoryFilter";
 import SearchBar from "./components/SearchBar";
 import ProductCard from "./components/ProductCard";
+import Sort from "./components/Sort"
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -19,6 +20,8 @@ function App() {
   const [error, setError] = useState(null);
 
   const [search, setSearch] = useState("");
+
+  const [sortOption, setSortOption] = useState("default");
 
   useEffect(() => {
     fetch("https://dummyjson.com/products?limit=194")
@@ -59,10 +62,18 @@ function App() {
     result = result.filter((p) =>
       p.title.toLowerCase().includes(search.toLowerCase())
     );
+   
   }
+   if (sortOption === "rating-desc") {
+  result.sort((a, b) => b.rating - a.rating);
+}
+
+if (sortOption === "rating-asc") {
+  result.sort((a, b) => a.rating - b.rating);
+}
 
     setFilteredProducts(result);
-  }, [products, selectedCategory, onlyDiscount, search]);
+  }, [products, search, selectedCategory, onlyDiscount, sortOption]);
 
   if (loading) return <p>Cargando productos...</p>;
   if (error) return <p>{error}</p>;
@@ -73,7 +84,7 @@ function App() {
 
       <div className="controls">
        <SearchBar search={search} setSearch={setSearch} />
-
+    
         <CategoryFilter
           categories={categories}
           selectedCategory={selectedCategory}
@@ -81,15 +92,17 @@ function App() {
           onlyDiscount={onlyDiscount}
           setOnlyDiscount={setOnlyDiscount}
         />
+         <Sort sortOption={sortOption} setSortOption={setSortOption} />
       </div>
+      
 
       <div className="products-grid">
         {filteredProducts.length === 0 ? (
           <p>No hay productos</p>
-        ) : (
+            ) : (
           filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
-          ))
+           ))
         )}
       </div>
     </div>
