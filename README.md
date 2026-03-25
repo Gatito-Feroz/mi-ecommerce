@@ -1,18 +1,37 @@
-# React + Vite
+# Mini Ecommerce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción del proyecto
 
-Currently, two official plugins are available:
+Este proyecto es un **mini ecommerce desarrollado en React**, que consume la API pública **DummyJSON** para simular una tienda en línea real.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Éste permite explorar productos, filtrarlos por categoría, buscar por nombre y visualizar información detallada de cada producto de forma dinámica.
 
-## React Compiler
+El objetivo principal del proyecto es practicar el uso de **React Hooks (useState y useEffect)**, manejo de APIs y filtrado de datos en tiempo real.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Tecnologías utilizadas
 
-Note: This will impact Vite dev & build performances.
+- React
+- JavaScript (ES6+)
+- HTML5
+- CSS3
+- DummyJSON API
+- Hooks: useState, useEffect
 
-## Expanding the ESLint configuration
+Instalación y ejecución local
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Clonar el repositorio
+Ingresas a git bash y ejecutas lo siguiente:
+git clone https://github.com/Gatito-Feroz/mi-ecommerce.git
+
+### 2. Entrar al proyecto
+Para entrar al proyecto debes ejecutar:
+cd mi-ecommerce
+
+### 3. Instalar dependencias
+Con:
+npm install
+
+### 4. Ejecutar el proyecto
+Con: 
+
+npm run dev
